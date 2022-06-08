@@ -1,0 +1,26 @@
+LLVMFuzzerTestOneInput:
+    8|     10|extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+    9|       |
+   10|       |
+   11|     10|	char stack_buffer[100];
+   12|       |
+   13|       |
+   14|     10|	custom_memcpy(stack_buffer, (char*)data, size);
+   15|     10|	printf("%s\n", stack_buffer);
+   16|       |
+   17|     10|	return 0;
+   18|     10|}
+
+_Z13custom_memcpyPcS_j:
+    1|     10|void custom_memcpy(char* dst, char* src, unsigned int size) {
+    2|    269|	for (unsigned int i = 0; i < size; i++)
+  ------------------
+  |  Branch (2:27): [True: 259, False: 10]
+  ------------------
+    3|    259|		if (src[i] != '6')
+  ------------------
+  |  Branch (3:7): [True: 259, False: 0]
+  ------------------
+    4|    259|			dst[i] = src[i];
+    5|     10|}
+

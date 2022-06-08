@@ -1,0 +1,43 @@
+LLVMFuzzerTestOneInput:
+    8|     28|extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+    9|       |
+   10|     28|	size_t heap_size = 900;
+   11|     28|	char* a = (char*) malloc(heap_size);
+   12|     28|	memset(a, 0, heap_size);
+   13|       |	
+   14|       |
+   15|     28|	size_t min_size = heap_size;
+   16|       |
+   17|     28|	if (min_size > size)
+  ------------------
+  |  Branch (17:6): [True: 26, False: 2]
+  ------------------
+   18|     26|		min_size = size;
+   19|       |
+   20|     28|	custom_memcpy(a, (char*) data,  min_size);
+   21|       |
+   22|       |
+   23|     28|	if (min_size > 0)
+  ------------------
+  |  Branch (23:6): [True: 28, False: 0]
+  ------------------
+   24|     28|		printf("%c\n", a[0]);
+   25|       |	
+   26|       |
+   27|     28|	free(a);
+   28|     28|	return 0;
+   29|     28|}
+
+_Z13custom_memcpyPcS_j:
+    1|     28|void custom_memcpy(char* dst, char* src, unsigned int size) {
+    2|  2.43k|	for (unsigned int i = 0; i < size; i++)
+  ------------------
+  |  Branch (2:27): [True: 2.40k, False: 28]
+  ------------------
+    3|  2.40k|		if (src[i] != '6')
+  ------------------
+  |  Branch (3:7): [True: 1.73k, False: 673]
+  ------------------
+    4|  1.73k|			dst[i] = src[i];
+    5|     28|}
+

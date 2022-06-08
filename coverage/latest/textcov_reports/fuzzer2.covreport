@@ -13,14 +13,14 @@ LLVMFuzzerTestOneInput:
 
 _Z13custom_memcpyPcS_j:
     1|     10|void custom_memcpy(char* dst, char* src, unsigned int size) {
-    2|    269|	for (unsigned int i = 0; i < size; i++)
+    2|    143|	for (unsigned int i = 0; i < size; i++)
   ------------------
-  |  Branch (2:27): [True: 259, False: 10]
+  |  Branch (2:27): [True: 133, False: 10]
   ------------------
-    3|    259|		if (src[i] != '6')
+    3|    133|		if (src[i] != '6')
   ------------------
-  |  Branch (3:7): [True: 259, False: 0]
+  |  Branch (3:7): [True: 133, False: 0]
   ------------------
-    4|    259|			dst[i] = src[i];
+    4|    133|			dst[i] = src[i];
     5|     10|}
 
